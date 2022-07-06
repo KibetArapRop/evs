@@ -166,6 +166,24 @@ nav #signup {
     text-align: center;
 }
 
+#profile_form #radio-btns {
+    display: flex;
+}
+
+#profile_form #radio-btns > div{
+    display: flex;
+    margin-left: 10px;
+}
+
+#profile_form #radio-btns > div > label {
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+#profile_form .contestant-input {
+    display: none;
+}
+
 #profile_form form input[type='submit'] {
     padding: 4px 9px;
     width: 90px;
@@ -174,6 +192,7 @@ nav #signup {
     border-radius: 5px;
     color: #fff;
 }
+
 
 /*dashboard*/
 #dashboard-profile {
