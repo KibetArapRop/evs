@@ -82,33 +82,66 @@ const profiles = []
 
 //complete profile
 app.post('/complete-profile', upload.single('photo_url'), (req, res) => {
-    
-let sql = 'INSERT INTO profile (v_id_fk, national_id, photo_url, polling_station, county, constituency, assembly_ward) VALUES (?,?,?,?,?,?,?)'
-
-connection.query(
-    /*sql statement*/
-    sql, 
-    [   
-        req.session.userID, 
-        req.body.national_id,
-        req.file.filename,
-        req.body.polling_station, 
-        req.body.county,
-        req.body.constituency,
-        req.body.assembly_ward
-    ],
-   /*callback function*/
-    (error, results) => {
-
-        let sql = 'UPDATE voters SET profile_status = ? WHERE v_id =?'
+ 
+    if (req.body.vying === 'false') {
+        let sql = 'INSERT INTO profile (v_id_fk, national_id, photo_url, polling_station, county, constituency, assembly_ward) VALUES (?,?,?,?,?,?,?)'
 
         connection.query(
-            sql, ['COMPLETE', req.session.userID], (error, results) => {
-                res.redirect('/dashboard')
+            /*sql statement*/
+            sql, 
+            [   
+                req.session.userID, 
+                req.body.national_id,
+                req.file.filename,
+                req.body.polling_station, 
+                req.body.county,
+                req.body.constituency,
+                req.body.assembly_ward
+            ],
+        /*callback function*/
+            (error, results) => {
+
+                let sql = 'UPDATE voters SET profile_status = ? WHERE v_id =?'
+
+                connection.query(
+                    sql, ['COMPLETE', req.session.userID], (error, results) => {
+                        res.redirect('/dashboard')
+                    }
+                )
+            }
+        )
+    } else {
+        let sql = 'INSERT INTO profile (v_id_fk, national_id, photo_url, polling_station, county, constituency, assembly_ward, vying, post, party) VALUES (?,?,?,?,?,?,?,?,?,?)'
+        connection.query(
+            /*sql statement*/
+            sql, 
+            [   
+                req.session.userID, 
+                req.body.national_id,
+                req.file.filename,
+                req.body.polling_station, 
+                req.body.county,
+                req.body.constituency,
+                req.body.assembly_ward,
+                'true',
+                req.body.post,
+                req.body.party
+            ],
+        /*callback function*/
+            (error, results) => {
+
+                let sql = 'UPDATE voters SET profile_status = ? WHERE v_id =?'
+
+                connection.query(
+                    sql, ['COMPLETE', req.session.userID], (error, results) => {
+                        res.redirect('/dashboard')
+                    }
+                )
             }
         )
     }
-)
+
+
 
     
 })
