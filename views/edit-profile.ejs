@@ -63,6 +63,18 @@
                 <label for=""> Change Profile Picture?</label>
                 <input type="file" name="photo_url" id="" >
             </div>
+
+            <% if(profile.vying === 'true'){ %> 
+                <div>
+                    <label for="">Post</label>
+                    <input type="text" name="post" id="" value="<%= profile.post %>">
+                </div>
+
+                <div>
+                    <label for="">Party</label>
+                    <input type="text" name="party" id="" value="<%= profile.party %>">
+                </div>
+            <% } %>
             
             <div id="btns">
                 <a href="/dashboard">Cancel</a>
