@@ -272,7 +272,7 @@ let sql = 'SELECT * FROM voters WHERE email =?'
                     }
                 })    
             } else {
-                let message = 'Account does not exist. Please create one to log in'
+                let message = "Account doesn't exist. Please create one to log in"
                 res.render('login', {
                 error: true, 
                 message: message,
