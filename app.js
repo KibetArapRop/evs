@@ -171,7 +171,9 @@ app.post('/edit-profile/:id', upload.single('photo_url'), (req, res) => {
         constituency: req.body.constituency,
         assemblyWard: req.body.assembly_ward,
         pollingStation: req.body.polling_station,
-        picture:  req.file
+        picture:  req.file,
+        post: req.body.post,
+        party: req.body.party
     }
 
   
@@ -185,7 +187,7 @@ app.post('/edit-profile/:id', upload.single('photo_url'), (req, res) => {
 
             let sql
             if(profile.picture === undefined){
-                sql = 'UPDATE profile SET national_id = ?, polling_station = ?, county = ?, constituency = ?, assembly_ward = ? WHERE v_id_fk = ?'
+                sql = 'UPDATE profile SET national_id = ?, polling_station = ?, county = ?, constituency = ?, assembly_ward = ?, post = ?, party = ?  WHERE v_id_fk = ?'
                 connection.query(
                     sql,
                      [
@@ -194,6 +196,8 @@ app.post('/edit-profile/:id', upload.single('photo_url'), (req, res) => {
                          profile.county,
                          profile.constituency,
                          profile.assemblyWard,
+                         profile.post,
+                         profile.party,
                          parseInt(req.params.id)
 
                     ],
@@ -202,7 +206,7 @@ app.post('/edit-profile/:id', upload.single('photo_url'), (req, res) => {
                     }
                 )
             } else {
-                sql = 'UPDATE profile SET national_id = ?, photo_url = ?,  polling_station = ?, county = ?, constituency = ?, assembly_ward = ?  WHERE v_id_fk = ?'
+                sql = 'UPDATE profile SET national_id = ?, photo_url = ?,  polling_station = ?, county = ?, constituency = ?, assembly_ward = ?, post = ?, party = ?  WHERE v_id_fk = ?'
                 connection.query(
                     sql,
                     [
@@ -212,6 +216,8 @@ app.post('/edit-profile/:id', upload.single('photo_url'), (req, res) => {
                         profile.county,
                         profile.constituency,
                         profile.assemblyWard,
+                        profile.post,
+                        profile.party,
                         parseInt(req.params.id)
 
                    ],
@@ -272,7 +278,7 @@ let sql = 'SELECT * FROM voters WHERE email =?'
                     }
                 })    
             } else {
-                let message = "Account doesn't exist. Please create one to log in"
+                let message = 'Account does not exist. Please create one to log in'
                 res.render('login', {
                 error: true, 
                 message: message,
@@ -375,3 +381,4 @@ const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
     console.log('Server Up: Application running...')
 })
+
