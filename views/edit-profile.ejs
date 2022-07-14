@@ -1,6 +1,7 @@
 <%- include('partials/header')%>
     
 <script src="/js/select-location.js" type="module"></script>
+<script src="/js/select-party.js" type="module"></script>
 
 <main class="container">
 
@@ -67,12 +68,25 @@
             <% if(profile.vying === 'true'){ %> 
                 <div>
                     <label for="">Post</label>
-                    <input type="text" name="post" id="" value="<%= profile.post %>">
+                    <!-- <input type="text" name="post" id="" value="<%= profile.post %>"> -->
+                    <select name="post" id="">
+                        <option value="<%= profile.post%>" selected><%= profile.post %></option>
+                        <option value="">Select Position</option>
+                        <option value="President" class="post">President</option>
+                        <option value="Governor" class="post">Governor</option>
+                        <option value="Senator" class="post">Senator</option>
+                        <option value="Member of Parliament" class="post">Member of Parliament</option>
+                        <option value="Women Representative" class="post">Women Representative</option>
+                        <option value="Member of County Assembly" class="post">Member of County Assembly</option>
+                    </select>
                 </div>
-
+                
                 <div>
-                    <label for="">Party</label>
-                    <input type="text" name="party" id="" value="<%= profile.party %>">
+                    <label for="">Political Party</label>
+                    <select name="party" id="select-party">
+                        <option value="<%= profile.party %>" selected><%= profile.party %></option>
+                        <option value="">Select Party</option>
+                    </select>
                 </div>
             <% } %>
             
