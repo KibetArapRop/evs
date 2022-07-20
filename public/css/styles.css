@@ -197,6 +197,7 @@ nav #signup {
 /*dashboard*/
 #dashboard-profile {
     display: flex;
+    margin-bottom: 10px;
 }
 
 #dashboard-profile #picture {
@@ -278,4 +279,22 @@ nav #signup {
     padding-bottom: 5px;
 }
 
+#dashboard-candidates .position {
+    margin: 15px 0;
+}
+
+#dashboard-candidates .position h1{
+    background-color:#CBEBF5;
+    padding: 15px 15px 25px;
+    color: #7f7d7d;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+#dashboard-candidates .position div {
+    height: 250px;
+    background-color: #E3E7F1;
+    border-radius: 15px;
+    margin-top: -10px;
+}
 /*dashboard*/
