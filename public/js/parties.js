@@ -49,6 +49,16 @@ const parties = [
         name:'AMANI NATIONAL CONGRESS',
         abbr: 'ANC',
         symbol: ''
+    },
+    {
+        name:'AGANO PARTY',
+        abbr: 'AGANO',
+        symbol: ''
+    },
+    {
+        name:'ROOTS PARTY',
+        abbr: 'ROOTS',
+        symbol: ''
     }
 ]
 
