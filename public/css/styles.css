@@ -291,10 +291,41 @@ nav #signup {
     border-top-right-radius: 15px;
 }
 
-#dashboard-candidates .position div {
-    height: 250px;
+#dashboard-candidates .position > div {
+    /* height: 250px; */
     background-color: #E3E7F1;
     border-radius: 15px;
     margin-top: -10px;
+    display: flex;
+    padding: 15px;
+    /* align-items: center; */
+}
+
+#dashboard-candidates .candidate {
+    margin-right: 20px;
+    text-align: center;
+}
+
+#dashboard-candidates .candidate div{
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+#dashboard-candidates .candidate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 50%;
+}
+
+#dashboard-candidates .candidate h2{
+    font-size: 17px;
+    margin: 8px 0;
+}
+
+#dashboard-candidates .candidate p{
+    font-size: 12px;
 }
 /*dashboard*/
