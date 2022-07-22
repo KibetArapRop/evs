@@ -60,7 +60,15 @@ app.get('/dashboard', (req,res) => {
     connection.query(
         sql, 
         (error, results) => {
-            res.render('dashboard', {profile: results[0]})
+            let profile = results[0]
+            connection.query(
+                'SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE post = ?',
+                ['President'], 
+                (error, results) => {
+                    res.render('dashboard', {profile: profile, candidates:results})
+                }
+            )
+            
         }
     )
 
