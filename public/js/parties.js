@@ -59,6 +59,16 @@ const parties = [
         name:'ROOTS PARTY',
         abbr: 'ROOTS',
         symbol: ''
+    },
+    {
+        name:'INDEPENDENT CANDIDATE',
+        abbr: 'IND',
+        symbol: ''
+    },
+    {
+        name:'THE NATIONAL VISION PARTY',
+        abbr: 'NVP',
+        symbol: ''
     }
 ]
 
