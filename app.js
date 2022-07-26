@@ -62,8 +62,8 @@ app.get('/dashboard', (req,res) => {
         (error, results) => {
             let profile = results[0]
             connection.query(
-                'SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE post = ?',
-                ['President'], 
+                'SELECT * FROM voters JOIN profile ON v_id_fk = v_id WHERE post = ? OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND constituency = ?) OR (post = ? AND assembly_ward = ?)',
+                ['President','Governor', profile.county, 'Senator', profile.county, 'Women Representative', profile.county, 'Member of Parliament', profile.constituency, 'Member of County Assembly', profile.assembly_ward], 
                 (error, results) => {
                     res.render('dashboard', {profile: profile, candidates:results})
                 }

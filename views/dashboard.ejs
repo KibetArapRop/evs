@@ -41,7 +41,7 @@
         <div class="position">
             <h1>The Presidency</h1>
             <div>
-                    <% candidates.forEach(candidate => {%>
+                    <% candidates.filter(candidate => candidate.post === 'President').forEach(candidate => {%>
                         <div class="candidate">
                             <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
                             <h2><%= candidate.fullname %></h2>
@@ -55,45 +55,65 @@
         <div class="position">
             <h1> National Assembly</h1>
             <div>
-                <div>
-                    
-                </div>
+                <% candidates.filter(candidate => candidate.post === 'Member of Parliament').forEach(candidate => {%>
+                    <div class="candidate">
+                        <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                        <h2><%= candidate.fullname %></h2>
+                        <p><%= candidate.party %></p>
+                    </div>
+                <%}) %>
             </div>
         </div>
 
         <div class="position">
             <h1>The Senate</h1>
             <div>
-                <div>
-                    
-                </div>
+                <% candidates.filter(candidate => candidate.post === 'Senator').forEach(candidate => {%>
+                    <div class="candidate">
+                        <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                        <h2><%= candidate.fullname %></h2>
+                        <p><%= candidate.party %></p>
+                    </div>
+                <%}) %>
             </div>
         </div>
 
         <div class="position">
             <h1>Women Representative</h1>
             <div>
-                <div>
-                    
-                </div>
+                <% candidates.filter(candidate => candidate.post === 'Women Representative').forEach(candidate => {%>
+                    <div class="candidate">
+                        <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                        <h2><%= candidate.fullname %></h2>
+                        <p><%= candidate.party %></p>
+                    </div>
+                <%}) %>
             </div>
         </div>
 
         <div class="position">
             <h1>County Governor</h1>
             <div>
-                <div>
-                    
-                </div>
+                <% candidates.filter(candidate => candidate.post === 'Governor').forEach(candidate => {%>
+                    <div class="candidate">
+                        <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                        <h2><%= candidate.fullname %></h2>
+                        <p><%= candidate.party %></p>
+                    </div>
+                <%}) %>
             </div>
         </div>
 
         <div class="position">
             <h1>County Assembly</h1>
             <div>
-                <div>
-                    
-                </div>
+                <% candidates.filter(candidate => candidate.post === 'Member of County Assembly').forEach(candidate => {%>
+                    <div class="candidate">
+                        <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                        <h2><%= candidate.fullname %></h2>
+                        <p><%= candidate.party %></p>
+                    </div>
+                <%}) %>
             </div>
         </div>
     </div>
