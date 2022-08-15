@@ -82,22 +82,44 @@ app.get('/dashboard', (req,res) => {
 app.get('/vote', (req, res) => {
     if (res.locals.isLoggedIn) {
 
-        let sql = `SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE profile_status = 'COMPLETE' AND v_id = ${req.session.userID}`
+        if(req.session.hasVoted === 'YES') {
+            let sql = `SELECT * FROM voters JOIN profile ON v_id = v_id_fk JOIN votes ON votes.v_id_fk = profile.v_id_fk WHERE profile_status = 'COMPLETE' AND v_id = ${req.session.userID}`
     
-        connection.query(
-            sql, 
-            (error, results) => {
-                let profile = results[0]
-                connection.query(
-                    'SELECT * FROM voters JOIN profile ON v_id_fk = v_id WHERE post = ? OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND constituency = ?) OR (post = ? AND assembly_ward = ?)',
-                    ['President','Governor', profile.county, 'Senator', profile.county, 'Women Representative', profile.county, 'Member of Parliament', profile.constituency, 'Member of County Assembly', profile.assembly_ward], 
-                    (error, results) => {
-                        res.render('vote', {profile: profile, candidates:results})
-                    }
-                )
-                
-            }
-        )
+            connection.query(
+                sql, 
+                (error, results) => {
+                    let profile = results[0]
+                    connection.query(
+                        'SELECT * FROM voters JOIN profile ON v_id_fk = v_id WHERE post = ? OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND constituency = ?) OR (post = ? AND assembly_ward = ?)',
+                        ['President','Governor', profile.county, 'Senator', profile.county, 'Women Representative', profile.county, 'Member of Parliament', profile.constituency, 'Member of County Assembly', profile.assembly_ward], 
+                        (error, results) => {
+                            res.render('vote', {profile: profile, candidates:results})
+                        }
+                    )            
+                    
+                }
+            )
+
+        } else {
+            let sql = `SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE profile_status = 'COMPLETE' AND v_id = ${req.session.userID}`
+    
+            connection.query(
+                sql, 
+                (error, results) => {
+                    let profile = results[0]
+                    connection.query(
+                        'SELECT * FROM voters JOIN profile ON v_id_fk = v_id WHERE post = ? OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND constituency = ?) OR (post = ? AND assembly_ward = ?)',
+                        ['President','Governor', profile.county, 'Senator', profile.county, 'Women Representative', profile.county, 'Member of Parliament', profile.constituency, 'Member of County Assembly', profile.assembly_ward], 
+                        (error, results) => {
+                            res.render('vote', {profile: profile, candidates:results})
+                        }
+                    )            
+                    
+                }
+            )
+        }
+
+ 
     
         } else {
              res.redirect('/login')
@@ -332,7 +354,7 @@ app.post('/login', (req,res) => {
         password: req.body.password
     }
     
-let sql = 'SELECT * FROM voters WHERE email =?'
+let sql = 'SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE email =?'
 
     connection.query(
         sql,
@@ -343,6 +365,7 @@ let sql = 'SELECT * FROM voters WHERE email =?'
                     if(matches) {
                         req.session.userID = results[0].v_id
                         req.session.username = results[0].fullname.split(' ')[0]
+                        req.session.hasVoted = results[0].has_voted
                         if(results[0].profile_status === 'INCOMPLETE') {   
                             res.redirect('/profile')
                             console.log(req.sessionID.userID)

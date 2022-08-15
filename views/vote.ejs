@@ -3,7 +3,70 @@
     <main id="voting-page" class="container">
 
         <% if(profile.has_voted === 'YES'){ %>
-            <h1>You have voted</h1>
+            
+
+            <div class="position">
+                <h1>You have voted for:</h1>
+                <div>
+                    <% let president= candidates.find(candidate => candidate.fullname === profile.president) %>
+                
+                    <div class="candidate">
+                        <div><img src="/uploads/<%= president.photo_url %>" alt=""></div>
+                        <h2><%= president.fullname%></h2>
+                        <p><%= president.party %></p>
+                        <small><b>President</b></small>
+                    </div>
+
+                    <% let senator= candidates.find(candidate => candidate.fullname === profile.senator) %>
+                
+                    <div class="candidate">
+                        <div><img src="/uploads/<%= senator.photo_url %>" alt=""></div>
+                        <h2><%= senator.fullname%></h2>
+                        <p><%= senator.party %></p>
+                        <small><b>Senator</b></small>
+                    </div>
+
+                    <% let governor= candidates.find(candidate => candidate.fullname === profile.governor) %>
+                
+                    <div class="candidate">
+                        <div><img src="/uploads/<%= governor.photo_url %>" alt=""></div>
+                        <h2><%= governor.fullname%></h2>
+                        <p><%= governor.party %></p>
+                        <small><b>Governor</b></small>
+                    </div>
+                    <% let mp= candidates.find(candidate => candidate.fullname === profile.mp) %>
+                
+                    <div class="candidate">
+                        <div><img src="/uploads/<%= mp.photo_url %>" alt=""></div>
+                        <h2><%= mp.fullname%></h2>
+                        <p><%= mp.party %></p>
+                        <small><b>Member of Parliament</b></small>
+                    </div>
+
+                    <% let women_rep= candidates.find(candidate => candidate.fullname === profile.women_rep) %>
+                
+                    <div class="candidate">
+                        <div><img src="/uploads/<%= women_rep.photo_url %>" alt=""></div>
+                        <h2><%= women_rep.fullname%></h2>
+                        <p><%= women_rep.party %></p>
+                        <small><b>Women Representative</b></small>
+                    </div>
+                    <% let mca= candidates.find(candidate => candidate.fullname === profile.mca) %>
+                
+                    <div class="candidate">
+                        <div><img src="/uploads/<%= mca.photo_url %>" alt=""></div>
+                        <h2><%= mca.fullname%></h2>
+                        <p><%= mca.party %></p>
+                        <small><b>Member of County Assembly</b></small>
+                    </div>
+                </div>
+            </div>
+            
+
+
+
+
+
         <% } else { %>  
             <form action="/vote/<%= profile.v_id %>"  method="post">
 
@@ -24,7 +87,7 @@
                 <div class="position">
                     <h1> National Assembly</h1>
                     <div>
-                        <% candidates.filter(candidate => candidate.post === 'Member of Parliament').forEach(candidate => {%>
+                        <% candidates.filter(candidate => candidate.post === 'mp').forEach(candidate => {%>
                             <div class="candidate">
                                 <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
                                 <h2><%= candidate.fullname %></h2>
