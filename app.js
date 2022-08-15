@@ -77,6 +77,80 @@ app.get('/dashboard', (req,res) => {
         }   
 })
 
+
+// vote
+app.get('/vote', (req, res) => {
+    if (res.locals.isLoggedIn) {
+
+        let sql = `SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE profile_status = 'COMPLETE' AND v_id = ${req.session.userID}`
+    
+        connection.query(
+            sql, 
+            (error, results) => {
+                let profile = results[0]
+                connection.query(
+                    'SELECT * FROM voters JOIN profile ON v_id_fk = v_id WHERE post = ? OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND constituency = ?) OR (post = ? AND assembly_ward = ?)',
+                    ['President','Governor', profile.county, 'Senator', profile.county, 'Women Representative', profile.county, 'Member of Parliament', profile.constituency, 'Member of County Assembly', profile.assembly_ward], 
+                    (error, results) => {
+                        res.render('vote', {profile: profile, candidates:results})
+                    }
+                )
+                
+            }
+        )
+    
+        } else {
+             res.redirect('/login')
+            }   
+})
+
+app.post('/vote/:id' , (req,res) => {
+    const selectedCandidates = {
+        president: req.body.president,
+        mp:req.body.mp,
+        senator:req.body.senator,
+        womenRep:req.body.womenRep,
+        governor:req.body.governor,
+        mca:req.body.mca
+    }
+
+    connection.query(
+        'SELECT * FROM votes WHERE v_id_fk = ?',
+        [parseInt(req.params.id)],
+        (error,results) => {
+            if (results.length > 0) {
+                res.send('Already voted')
+            } else {
+                let sql = 'INSERT INTO votes (v_id_fk, president, mp, senator, women_rep, governor, mca) VALUES (?,?,?,?,?,?,?)'
+
+                connection.query(
+                   sql,
+                   [
+                    parseInt(req.params.id),
+                    selectedCandidates.president,
+                    selectedCandidates.mp,
+                    selectedCandidates.senator,
+                    selectedCandidates.womenRep,
+                    selectedCandidates.governor,
+                    selectedCandidates.mca
+                   ],
+                   (error,results) => {
+                        connection.query(
+                            'UPDATE profile SET has_voted = ? WHERE v_id_fk = ?',
+                            ['YES', parseInt(req.params.id)],
+                            (error,results) => {
+                                res.redirect('/dashboard')
+                            }
+                        )
+                       
+                   }
+                )
+            }
+        }
+    )
+
+})
+
 //profile
 app.get('/profile', (req,res) => {
    if (res.locals.isLoggedIn) {

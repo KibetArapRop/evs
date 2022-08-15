@@ -1,0 +1,100 @@
+<%- include('partials/header') %>
+    <br>
+    <main id="voting-page" class="container">
+
+        <% if(profile.has_voted === 'YES'){ %>
+            <h1>You have voted</h1>
+        <% } else { %>  
+            <form action="/vote/<%= profile.v_id %>"  method="post">
+
+                <div class="position">
+                    <h1>The Presidency</h1>
+                    <div>
+                            <% candidates.filter(candidate => candidate.post === 'President').forEach(candidate => {%>
+                                <div class="candidate" >
+                                    <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                                    <h2><%= candidate.fullname %></h2>
+                                    <p><%= candidate.party %></p>
+                                    <input type="radio" name="president" id="" value="<%= candidate.fullname %>"> 
+                                </div>
+                            <%}) %>
+                    </div>
+                </div>
+    
+                <div class="position">
+                    <h1> National Assembly</h1>
+                    <div>
+                        <% candidates.filter(candidate => candidate.post === 'Member of Parliament').forEach(candidate => {%>
+                            <div class="candidate">
+                                <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                                <h2><%= candidate.fullname %></h2>
+                                <p><%= candidate.party %></p>
+                                <input type="radio" name="mp" id="" value="<%= candidate.fullname %>"> 
+                            </div>
+                        <%}) %>
+                    </div>
+                </div>
+        
+                <div class="position">
+                    <h1>The Senate</h1>
+                    <div>
+                        <% candidates.filter(candidate => candidate.post === 'Senator').forEach(candidate => {%>
+                            <div class="candidate">
+                                <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                                <h2><%= candidate.fullname %></h2>
+                                <p><%= candidate.party %></p>
+                                <input type="radio" name="senator" id="" value="<%= candidate.fullname %>"> 
+                            </div>
+                        <%}) %>
+                    </div>
+                </div>
+        
+                <div class="position">
+                    <h1>Women Representative</h1>
+                    <div>
+                        <% candidates.filter(candidate => candidate.post === 'Women Representative').forEach(candidate => {%>
+                            <div class="candidate">
+                                <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                                <h2><%= candidate.fullname %></h2>
+                                <p><%= candidate.party %></p>
+                                <input type="radio" name="womenRep" id="" value="<%= candidate.fullname %>"> 
+                            </div>
+                        <%}) %>
+                    </div>
+                </div>
+        
+                <div class="position">
+                    <h1>County Governor</h1>
+                    <div>
+                        <% candidates.filter(candidate => candidate.post === 'Governor').forEach(candidate => {%>
+                            <div class="candidate">
+                                <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                                <h2><%= candidate.fullname %></h2>
+                                <p><%= candidate.party %></p>
+                                <input type="radio" name="governor" id="" value="<%= candidate.fullname %>"> 
+                            </div>
+                        <%}) %>
+                    </div>
+                </div>
+        
+                <div class="position">
+                    <h1>County Assembly</h1>
+                    <div>
+                        <% candidates.filter(candidate => candidate.post === 'Member of County Assembly').forEach(candidate => {%>
+                            <div class="candidate">
+                                <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
+                                <h2><%= candidate.fullname %></h2>
+                                <p><%= candidate.party %></p>
+                                <input type="radio" name="mca" id="" value="<%= candidate.fullname %>"> 
+                            </div>
+                        <%}) %>
+                    </div>
+                </div>
+                    <input type="submit" value="CAST VOTE">
+            </form>
+        <% } %>
+        <br>
+        <br>
+    </main>
+
+<%- include('partials/footer') %>

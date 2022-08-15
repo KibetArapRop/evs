@@ -237,7 +237,7 @@ nav #signup {
     font-weight: bold;
 }
 
-#dashboard-profile #picture a{
+#dashboard-profile #picture a, #voting-page input[type='submit']{
     text-decoration: none;
     padding: 4px 9px;
     border-radius: 5px;
@@ -279,11 +279,11 @@ nav #signup {
     padding-bottom: 5px;
 }
 
-#dashboard-candidates .position {
+#dashboard-candidates .position, #voting-page .position {
     margin: 15px 0;
 }
 
-#dashboard-candidates .position h1{
+#dashboard-candidates .position h1, #voting-page .position h1{
     background-color:#CBEBF5;
     padding: 15px 15px 25px;
     color: #7f7d7d;
@@ -291,7 +291,7 @@ nav #signup {
     border-top-right-radius: 15px;
 }
 
-#dashboard-candidates .position > div {
+#dashboard-candidates .position > div, #voting-page .position > div{
     /* height: 250px; */
     background-color: #E3E7F1;
     border-radius: 15px;
@@ -301,18 +301,19 @@ nav #signup {
     /* align-items: center; */
 }
 
-#dashboard-candidates .candidate {
+#dashboard-candidates .candidate, #voting-page .candidate {
     margin-right: 20px;
     text-align: center;
 }
 
-#dashboard-candidates .candidate div{
+#dashboard-candidates .candidate div, #voting-page .candidate div{
     width: 150px;
     height: 150px;
     margin: 0 auto;
+    text-align: center;
 }
 
-#dashboard-candidates .candidate img {
+#dashboard-candidates .candidate img, #voting-page .candidate img{
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -320,12 +321,28 @@ nav #signup {
     border-radius: 50%;
 }
 
-#dashboard-candidates .candidate h2{
+#dashboard-candidates .candidate h2, #voting-page .candidate h2{
     font-size: 17px;
     margin: 8px 0;
 }
 
-#dashboard-candidates .candidate p{
+#dashboard-candidates .candidate p, #voting-page .candidate p{
     font-size: 12px;
 }
-/*dashboard*/
+/*end of dashboard*/
+
+/* voting-page*/
+
+#voting-page input[type='submit']{
+    display: block;
+    padding: 10px 12px;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+
+
+
+
+
+/* end of voting-page */
