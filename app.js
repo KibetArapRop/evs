@@ -136,40 +136,43 @@ app.post('/vote/:id' , (req,res) => {
         mca:req.body.mca
     }
 
-    connection.query(
-        'SELECT * FROM votes WHERE v_id_fk = ?',
-        [parseInt(req.params.id)],
-        (error,results) => {
-            if (results.length > 0) {
-                res.send('Already voted')
-            } else {
-                let sql = 'INSERT INTO votes (v_id_fk, president, mp, senator, women_rep, governor, mca) VALUES (?,?,?,?,?,?,?)'
+    let sql = 'INSERT INTO votes (v_id_fk, president, mp, senator, women_rep, governor, mca) VALUES (?,?,?,?,?,?,?)'
 
-                connection.query(
-                   sql,
-                   [
-                    parseInt(req.params.id),
-                    selectedCandidates.president,
-                    selectedCandidates.mp,
-                    selectedCandidates.senator,
-                    selectedCandidates.womenRep,
-                    selectedCandidates.governor,
-                    selectedCandidates.mca
-                   ],
-                   (error,results) => {
-                        connection.query(
-                            'UPDATE profile SET has_voted = ? WHERE v_id_fk = ?',
-                            ['YES', parseInt(req.params.id)],
-                            (error,results) => {
-                                res.redirect('/dashboard')
-                            }
-                        )
-                       
-                   }
-                )
-            }
-        }
+    connection.query(
+       sql,
+       [
+        parseInt(req.params.id),
+        selectedCandidates.president,
+        selectedCandidates.mp,
+        selectedCandidates.senator,
+        selectedCandidates.womenRep,
+        selectedCandidates.governor,
+        selectedCandidates.mca
+       ],
+       (error,results) => {
+            connection.query(
+                'UPDATE voters SET has_voted = ? WHERE v_id = ?',
+                ['YES', parseInt(req.params.id)],
+                (error,results) => {
+                    req.session.hasVoted = 'YES'
+                    res.redirect('/dashboard')
+                }
+            )
+           
+       }
     )
+
+    // connection.query(
+    //     'SELECT * FROM votes WHERE v_id_fk = ?',
+    //     [parseInt(req.params.id)],
+    //     (error,results) => {
+    //         if (results.length > 0) {
+    //             res.send('Already voted')
+    //         } else {
+ 
+    //         }
+    //     }
+    // )
 
 })
 
@@ -354,7 +357,7 @@ app.post('/login', (req,res) => {
         password: req.body.password
     }
     
-let sql = 'SELECT * FROM voters JOIN profile ON v_id = v_id_fk WHERE email =?'
+let sql = 'SELECT * FROM voters WHERE email =?'
 
     connection.query(
         sql,

@@ -87,7 +87,7 @@
                 <div class="position">
                     <h1> National Assembly</h1>
                     <div>
-                        <% candidates.filter(candidate => candidate.post === 'mp').forEach(candidate => {%>
+                        <% candidates.filter(candidate => candidate.post === 'Member of Parliament').forEach(candidate => {%>
                             <div class="candidate">
                                 <div><img src="/uploads/<%=candidate.photo_url %>" alt=""></div>
                                 <h2><%= candidate.fullname %></h2>
