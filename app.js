@@ -65,7 +65,67 @@ app.get('/dashboard', (req,res) => {
                 'SELECT * FROM voters JOIN profile ON v_id_fk = v_id WHERE post = ? OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND county = ?) OR (post = ? AND constituency = ?) OR (post = ? AND assembly_ward = ?)',
                 ['President','Governor', profile.county, 'Senator', profile.county, 'Women Representative', profile.county, 'Member of Parliament', profile.constituency, 'Member of County Assembly', profile.assembly_ward], 
                 (error, results) => {
-                    res.render('dashboard', {profile: profile, candidates:results})
+                    let candidates = results
+                    //get votes for each candidates
+
+                    candidates.forEach(candidate => {
+                        if(candidate.post === 'President'){
+                            connection.query(
+                                'SELECT COUNT (*) AS votes FROM votes WHERE president = ?',
+                                [candidate.fullname],
+                                (error, results) => {
+                                    candidate.votes =results[0].votes
+                                    console.log(`${candidate.fullname} : ${candidate.votes} votes`)
+                                }
+                            )
+                        } else if (candidate.post === 'Member of Parliament'){
+                            connection.query(
+                                'SELECT COUNT (*) AS votes FROM votes WHERE mp = ?',
+                                [candidate.fullname],
+                                (error, results) => {
+                                    candidate.votes =results[0].votes
+                                    console.log(`${candidate.fullname} : ${candidate.votes} votes`)
+                                }
+                            )
+                        } else if (candidate.post === 'Senator'){
+                            connection.query(
+                                'SELECT COUNT (*) AS votes FROM votes WHERE senator = ?',
+                                [candidate.fullname],
+                                (error, results) => {
+                                    candidate.votes =results[0].votes
+                                    console.log(`${candidate.fullname} : ${candidate.votes} votes`)
+                                }
+                            )
+                        } else if (candidate.post === 'Women Representative'){
+                            connection.query(
+                                'SELECT COUNT (*) AS votes FROM votes WHERE women_rep = ?',
+                                [candidate.fullname],
+                                (error, results) => {
+                                    candidate.votes =results[0].votes
+                                    console.log(`${candidate.fullname} : ${candidate.votes} votes`)
+                                }
+                            )
+                        }else if (candidate.post === 'Governor'){
+                            connection.query(
+                                'SELECT COUNT (*) AS votes FROM votes WHERE governor = ?',
+                                [candidate.fullname],
+                                (error, results) => {
+                                    candidate.votes =results[0].votes
+                                    console.log(`${candidate.fullname} : ${candidate.votes} votes`)
+                                }
+                            )
+                        } else {
+                            connection.query(
+                                'SELECT COUNT (*) AS votes FROM votes WHERE mca = ?',
+                                [candidate.fullname],
+                                (error, results) => {
+                                    candidate.votes =results[0].votes
+                                    console.log(`${candidate.fullname} : ${candidate.votes} votes`)
+                                }
+                            )
+                        }
+                    })
+                    res.render('dashboard', {profile: profile, candidates:candidates})
                 }
             )
             
